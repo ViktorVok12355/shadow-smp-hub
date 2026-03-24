@@ -105,7 +105,7 @@ const Home = ({ onSignOut }: HomeProps) => {
             </Button>
           ) : (
             <div className="space-y-4">
-              <p className="text-green-500 font-medium">✅ Verified!</p>
+              <p className="text-primary font-medium">✅ Verified!</p>
               <Button onClick={() => navigate('/roles')} className="px-8">
                 Continue to Roles →
               </Button>
