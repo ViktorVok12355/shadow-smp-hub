@@ -11,7 +11,7 @@ const ThemeSelect = ({ onSelect }: ThemeSelectProps) => {
       <h1 className="font-display text-4xl md:text-5xl text-primary text-glow mb-4">
         ShadowSmp
       </h1>
-      <p className="text-muted-foreground mb-12 text-lg">Choose your side</p>
+      <p className="text-[hsl(0,0%,55%)] mb-12 text-lg">Choose your side</p>
       <div className="flex gap-6">
         <Button
           variant="outline"
