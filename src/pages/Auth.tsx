@@ -70,6 +70,7 @@ const Auth = ({ onBack }: AuthProps) => {
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back
       </Button>
+      <Card className="w-full max-w-md border-border">
         <CardHeader className="text-center">
           <CardTitle className="font-display text-2xl text-primary text-glow">
             ShadowSmp
