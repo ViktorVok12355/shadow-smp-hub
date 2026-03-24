@@ -61,12 +61,12 @@ const Auth = ({ onBack }: AuthProps) => {
         if (signInData.user) {
           const { data: profile } = await supabase
             .from('profiles')
-            .select('name, age')
+            .select('name, age, role')
             .eq('user_id', signInData.user.id)
             .single();
 
           const now = new Date();
-          const logContent = `Login Log\n=========\nDate: ${now.toISOString()}\nEmail: ${signInData.user.email}\nName: ${profile?.name ?? 'N/A'}\nAge: ${profile?.age ?? 'N/A'}\n`;
+          const logContent = `Login Log\n=========\nDate: ${now.toISOString()}\nEmail: ${signInData.user.email}\nName: ${profile?.name ?? 'N/A'}\nAge: ${profile?.age ?? 'N/A'}\nRole: ${profile?.role ?? 'N/A'}\n`;
           const fileName = `login_${signInData.user.id}_${now.getTime()}.txt`;
           const blob = new Blob([logContent], { type: 'text/plain' });
 
