@@ -48,34 +48,34 @@ const Roles = () => {
         ShadowSmp
       </h1>
 
-      <div className="w-full max-w-lg space-y-4 mb-10">
+      <div className="w-full max-w-xl space-y-5 mb-12">
         {roles.map((role) => (
           <button
             key={role.value}
             onClick={() => setSelected(role.value)}
-            className={`w-full flex items-center gap-4 border-2 rounded-xl p-6 transition-colors text-left ${
+            className={`w-full flex items-center gap-5 border-2 rounded-xl p-8 transition-colors text-left ${
               selected === role.value
                 ? 'bg-primary/10 border-primary'
                 : 'bg-card border-border hover:border-muted-foreground'
             }`}
           >
-            <span className="font-medium text-foreground text-lg">{role.label}</span>
+            <span className="font-medium text-foreground text-2xl">{role.label}</span>
           </button>
         ))}
       </div>
 
-      <div className="text-center space-y-6">
-        <Button onClick={handleSave} disabled={!selected || saving} className="px-10 py-6 text-base">
+      <div className="text-center space-y-8">
+        <Button onClick={handleSave} disabled={!selected || saving} className="px-12 py-7 text-lg text-white">
           {saving ? 'Saving...' : 'Save Role'}
         </Button>
-        <p className="text-foreground font-semibold text-lg">
+        <p className="text-foreground font-semibold text-xl">
           Type in the chat what you are (Good PvP, Bad PvP, or Builder)
         </p>
         <a
           href="https://discord.gg/PegSdwjd"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-lg hover:bg-primary/90 transition-colors font-medium text-base"
+          className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-10 py-5 rounded-lg hover:bg-primary/90 transition-colors font-medium text-lg"
         >
           Join Discord
           <ExternalLink className="w-5 h-5" />
