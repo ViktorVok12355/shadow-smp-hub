@@ -25,6 +25,11 @@ const Auth = ({ onBack }: AuthProps) => {
 
     try {
       if (isSignUp) {
+        if (!name.trim()) {
+          toast.error('Please enter your name');
+          setLoading(false);
+          return;
+        }
         const ageNum = parseInt(age);
         if (!age || isNaN(ageNum) || ageNum < 1 || ageNum > 120) {
           toast.error('Please enter a valid age');
@@ -40,11 +45,10 @@ const Auth = ({ onBack }: AuthProps) => {
 
         if (error) throw error;
 
-        // Update profile with age
         if (data.user) {
           await supabase
             .from('profiles')
-            .update({ age: ageNum })
+            .update({ age: ageNum, name: name.trim() } as any)
             .eq('user_id', data.user.id);
         }
 
