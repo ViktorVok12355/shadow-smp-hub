@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { LogOut, ChevronDown, Shield, Crown, Star, Code } from 'lucide-react';
+import { LogOut, ChevronDown, Shield, Crown, Star, Code, ArrowLeft } from 'lucide-react';
 import heroImage from '@/assets/minecraft-hero.jpg';
 
 interface HomeProps {
   onSignOut: () => void;
+  onBack: () => void;
 }
 
 const Home = ({ onSignOut }: HomeProps) => {
