@@ -54,8 +54,27 @@ const Auth = ({ onBack }: AuthProps) => {
 
         toast.success('Account created! Check your email to verify.');
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data: signInData, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+
+        // Log the login
+        if (signInData.user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('name, age')
+            .eq('user_id', signInData.user.id)
+            .single();
+
+          const now = new Date();
+          const logContent = `Login Log\n=========\nDate: ${now.toISOString()}\nEmail: ${signInData.user.email}\nName: ${profile?.name ?? 'N/A'}\nAge: ${profile?.age ?? 'N/A'}\n`;
+          const fileName = `login_${signInData.user.id}_${now.getTime()}.txt`;
+          const blob = new Blob([logContent], { type: 'text/plain' });
+
+          await supabase.storage
+            .from('logs')
+            .upload(fileName, blob, { contentType: 'text/plain' });
+        }
+
         toast.success('Welcome back!');
       }
     } catch (error: any) {
