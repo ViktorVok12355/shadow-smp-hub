@@ -9,7 +9,7 @@ interface HomeProps {
   onBack: () => void;
 }
 
-const Home = ({ onSignOut }: HomeProps) => {
+const Home = ({ onSignOut, onBack }: HomeProps) => {
   const [verified, setVerified] = useState(false);
   const [verifying, setVerifying] = useState(false);
   const navigate = useNavigate();
