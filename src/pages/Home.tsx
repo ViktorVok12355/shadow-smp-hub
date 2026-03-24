@@ -34,7 +34,7 @@ const Home = ({ onSignOut, onBack }: HomeProps) => {
       <div className="fixed top-4 right-4 z-50">
         <Button variant="outline" size="sm" onClick={onSignOut} className="gap-2 border-border">
           <LogOut className="w-4 h-4" />
-          Sign Out
+          Logout
         </Button>
       </div>
 
