@@ -5,8 +5,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
+import { ArrowLeft } from 'lucide-react';
 
-const Auth = () => {
+interface AuthProps {
+  onBack: () => void;
+}
+
+const Auth = ({ onBack }: AuthProps) => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -57,6 +62,14 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
+      <Button
+        variant="ghost"
+        className="absolute top-4 left-4 text-muted-foreground"
+        onClick={onBack}
+      >
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Back
+      </Button>
       <Card className="w-full max-w-md border-border">
         <CardHeader className="text-center">
           <CardTitle className="font-display text-2xl text-primary text-glow">

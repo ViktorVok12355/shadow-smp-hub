@@ -19,5 +19,11 @@ export function useTheme() {
     setThemeState(t);
   };
 
-  return { theme, setTheme };
+  const resetTheme = () => {
+    localStorage.removeItem('shadowsmp-theme');
+    document.documentElement.classList.remove('dark');
+    setThemeState(null);
+  };
+
+  return { theme, setTheme, resetTheme };
 }

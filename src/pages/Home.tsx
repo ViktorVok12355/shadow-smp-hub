@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { LogOut, ChevronDown, Shield, Crown, Star, Code } from 'lucide-react';
+import { LogOut, ChevronDown, Shield, Crown, Star, Code, ArrowLeft } from 'lucide-react';
 import heroImage from '@/assets/minecraft-hero.jpg';
 
 interface HomeProps {
   onSignOut: () => void;
+  onBack: () => void;
 }
 
-const Home = ({ onSignOut }: HomeProps) => {
+const Home = ({ onSignOut, onBack }: HomeProps) => {
   const [verified, setVerified] = useState(false);
   const [verifying, setVerifying] = useState(false);
   const navigate = useNavigate();
@@ -23,7 +24,13 @@ const Home = ({ onSignOut }: HomeProps) => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Sign Out */}
+      {/* Back & Sign Out */}
+      <div className="fixed top-4 left-4 z-50">
+        <Button variant="ghost" size="sm" onClick={onBack} className="gap-2 text-muted-foreground">
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </Button>
+      </div>
       <div className="fixed top-4 right-4 z-50">
         <Button variant="outline" size="sm" onClick={onSignOut} className="gap-2 border-border">
           <LogOut className="w-4 h-4" />
