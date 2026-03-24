@@ -7,7 +7,7 @@ interface ThemeSelectProps {
 
 const ThemeSelect = ({ onSelect }: ThemeSelectProps) => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[hsl(240,10%,6%)] text-[hsl(0,0%,95%)]">
       <h1 className="font-display text-4xl md:text-5xl text-primary text-glow mb-4">
         ShadowSmp
       </h1>
