@@ -16,6 +16,7 @@ const Auth = ({ onBack }: AuthProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [age, setAge] = useState('');
+  const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -24,6 +25,11 @@ const Auth = ({ onBack }: AuthProps) => {
 
     try {
       if (isSignUp) {
+        if (!name.trim()) {
+          toast.error('Please enter your name');
+          setLoading(false);
+          return;
+        }
         const ageNum = parseInt(age);
         if (!age || isNaN(ageNum) || ageNum < 1 || ageNum > 120) {
           toast.error('Please enter a valid age');
@@ -39,18 +45,36 @@ const Auth = ({ onBack }: AuthProps) => {
 
         if (error) throw error;
 
-        // Update profile with age
         if (data.user) {
           await supabase
             .from('profiles')
-            .update({ age: ageNum })
+            .update({ age: ageNum, name: name.trim() } as any)
             .eq('user_id', data.user.id);
         }
 
         toast.success('Account created! Check your email to verify.');
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data: signInData, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+
+        // Log the login
+        if (signInData.user) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('name, age')
+            .eq('user_id', signInData.user.id)
+            .single();
+
+          const now = new Date();
+          const logContent = `Login Log\n=========\nDate: ${now.toISOString()}\nEmail: ${signInData.user.email}\nName: ${profile?.name ?? 'N/A'}\nAge: ${profile?.age ?? 'N/A'}\n`;
+          const fileName = `login_${signInData.user.id}_${now.getTime()}.txt`;
+          const blob = new Blob([logContent], { type: 'text/plain' });
+
+          await supabase.storage
+            .from('logs')
+            .upload(fileName, blob, { contentType: 'text/plain' });
+        }
+
         toast.success('Welcome back!');
       }
     } catch (error: any) {
@@ -105,19 +129,32 @@ const Auth = ({ onBack }: AuthProps) => {
               />
             </div>
             {isSignUp && (
-              <div>
-                <Label htmlFor="age">Age</Label>
-                <Input
-                  id="age"
-                  type="number"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                  required
-                  min={1}
-                  max={120}
-                  placeholder="Your age"
-                />
-              </div>
+              <>
+                <div>
+                  <Label htmlFor="name">Name</Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    placeholder="Your name"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="age">Age</Label>
+                  <Input
+                    id="age"
+                    type="number"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                    required
+                    min={1}
+                    max={120}
+                    placeholder="Your age"
+                  />
+                </div>
+              </>
             )}
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? 'Loading...' : isSignUp ? 'Sign Up' : 'Sign In'}
