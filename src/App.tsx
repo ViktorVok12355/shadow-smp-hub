@@ -17,6 +17,8 @@ const AppContent = () => {
   const { theme, setTheme } = useTheme();
   const { user, loading, signOut } = useAuth();
 
+  console.log('[AppContent] theme:', theme, 'loading:', loading, 'user:', user?.id);
+
   if (!theme) {
     return <ThemeSelect onSelect={setTheme} />;
   }
