@@ -129,19 +129,32 @@ const Auth = ({ onBack }: AuthProps) => {
               />
             </div>
             {isSignUp && (
-              <div>
-                <Label htmlFor="age">Age</Label>
-                <Input
-                  id="age"
-                  type="number"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                  required
-                  min={1}
-                  max={120}
-                  placeholder="Your age"
-                />
-              </div>
+              <>
+                <div>
+                  <Label htmlFor="name">Name</Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    placeholder="Your name"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="age">Age</Label>
+                  <Input
+                    id="age"
+                    type="number"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                    required
+                    min={1}
+                    max={120}
+                    placeholder="Your age"
+                  />
+                </div>
+              </>
             )}
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? 'Loading...' : isSignUp ? 'Sign Up' : 'Sign In'}
