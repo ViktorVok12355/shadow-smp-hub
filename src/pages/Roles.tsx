@@ -2,23 +2,7 @@ import { ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
-const roles = [
-  {
-    name: 'Good PvP',
-    emoji: '⚔️',
-    url: 'https://discord.com/channels/1414156900114759772/1486039711276597299',
-  },
-  {
-    name: 'Bad PvP',
-    emoji: '🛡️',
-    url: 'https://discord.com/channels/1414156900114759772/1486039691189813380',
-  },
-  {
-    name: 'Builder',
-    emoji: '🏗️',
-    url: 'https://discord.com/channels/1414156900114759772/1486039764653178880',
-  },
-];
+const roles = ['⚔️ Good PvP', '🛡️ Bad PvP', '🏗️ Builder'];
 
 const Roles = () => {
   const navigate = useNavigate();
@@ -34,28 +18,34 @@ const Roles = () => {
       </Button>
 
       <p className="text-muted-foreground mb-2 uppercase tracking-widest text-sm">Roles</p>
-      <h1 className="font-display text-4xl md:text-5xl text-primary text-glow mb-12">
+      <h1 className="font-display text-4xl md:text-5xl text-primary text-glow mb-8">
         ShadowSmp
       </h1>
 
-      <div className="w-full max-w-md space-y-4">
+      <div className="w-full max-w-md space-y-3 mb-8">
         {roles.map((role) => (
-          <a
-            key={role.name}
-            href={role.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-between bg-card border border-border rounded-lg p-5 hover:border-primary transition-colors group"
+          <div
+            key={role}
+            className="flex items-center gap-3 bg-card border border-border rounded-lg p-4"
           >
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">{role.emoji}</span>
-              <span className="font-medium text-foreground group-hover:text-primary transition-colors">
-                {role.name}
-              </span>
-            </div>
-            <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-          </a>
+            <span className="font-medium text-foreground">{role}</span>
+          </div>
         ))}
+      </div>
+
+      <div className="text-center space-y-4">
+        <p className="text-foreground font-medium">
+          Type in the chat what you are (Good PvP, Bad PvP, or Builder)
+        </p>
+        <a
+          href="https://discord.gg/PegSdwjd"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium"
+        >
+          Join Discord
+          <ExternalLink className="w-4 h-4" />
+        </a>
       </div>
     </div>
   );
