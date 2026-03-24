@@ -14,10 +14,8 @@ import NotFound from "@/pages/NotFound";
 const queryClient = new QueryClient();
 
 const AppContent = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resetTheme } = useTheme();
   const { user, loading, signOut } = useAuth();
-
-  console.log('[AppContent] theme:', theme, 'loading:', loading, 'user:', user?.id);
 
   if (!theme) {
     return <ThemeSelect onSelect={setTheme} />;
@@ -32,13 +30,13 @@ const AppContent = () => {
   }
 
   if (!user) {
-    return <Auth />;
+    return <Auth onBack={resetTheme} />;
   }
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home onSignOut={signOut} />} />
+        <Route path="/" element={<Home onSignOut={signOut} onBack={resetTheme} />} />
         <Route path="/roles" element={<Roles />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

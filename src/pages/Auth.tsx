@@ -62,7 +62,14 @@ const Auth = ({ onBack }: AuthProps) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md border-border">
+      <Button
+        variant="ghost"
+        className="absolute top-4 left-4 text-muted-foreground"
+        onClick={onBack}
+      >
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Back
+      </Button>
         <CardHeader className="text-center">
           <CardTitle className="font-display text-2xl text-primary text-glow">
             ShadowSmp
