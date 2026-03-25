@@ -18,6 +18,7 @@ export type Database = {
         Row: {
           age: number | null
           created_at: string
+          discord_name: string | null
           id: string
           name: string | null
           role: string | null
@@ -26,6 +27,7 @@ export type Database = {
         Insert: {
           age?: number | null
           created_at?: string
+          discord_name?: string | null
           id?: string
           name?: string | null
           role?: string | null
@@ -34,6 +36,7 @@ export type Database = {
         Update: {
           age?: number | null
           created_at?: string
+          discord_name?: string | null
           id?: string
           name?: string | null
           role?: string | null
