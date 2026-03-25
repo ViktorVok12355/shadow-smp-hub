@@ -16,14 +16,22 @@ const Roles = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [selected, setSelected] = useState<string | null>(null);
+  const [discordName, setDiscordName] = useState('');
+  const [realName, setRealName] = useState('');
   const [saving, setSaving] = useState(false);
 
+  const canSave = selected && discordName.trim().length > 0;
+
   const handleSave = async () => {
-    if (!selected || !user) return;
+    if (!canSave || !user) return;
     setSaving(true);
     const { error } = await supabase
       .from('profiles')
-      .update({ role: selected } as any)
+      .update({
+        role: selected,
+        discord_name: discordName.trim(),
+        name: realName.trim() || null,
+      } as any)
       .eq('user_id', user.id);
     setSaving(false);
     if (error) {
