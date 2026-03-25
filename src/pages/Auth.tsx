@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { lovable } from '@/integrations/lovable/index';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -18,6 +19,21 @@ const Auth = ({ onBack }: AuthProps) => {
   const [age, setAge] = useState('');
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+
+  const handleGoogleLogin = async () => {
+    setGoogleLoading(true);
+    try {
+      const { error } = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: window.location.origin,
+      });
+      if (error) throw error;
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -160,6 +176,23 @@ const Auth = ({ onBack }: AuthProps) => {
               {loading ? 'Loading...' : isSignUp ? 'Sign Up' : 'Sign In'}
             </Button>
           </form>
+          <div className="relative my-4">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-border" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-card px-2 text-muted-foreground">Or</span>
+            </div>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={handleGoogleLogin}
+            disabled={googleLoading}
+          >
+            {googleLoading ? 'Connecting...' : 'Continue with Google'}
+          </Button>
           <div className="mt-4 text-center">
             <button
               type="button"
