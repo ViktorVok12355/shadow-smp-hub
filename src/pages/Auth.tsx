@@ -176,6 +176,23 @@ const Auth = ({ onBack }: AuthProps) => {
               {loading ? 'Loading...' : isSignUp ? 'Sign Up' : 'Sign In'}
             </Button>
           </form>
+          <div className="relative my-4">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-border" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-card px-2 text-muted-foreground">Or</span>
+            </div>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={handleGoogleLogin}
+            disabled={googleLoading}
+          >
+            {googleLoading ? 'Connecting...' : 'Continue with Google'}
+          </Button>
           <div className="mt-4 text-center">
             <button
               type="button"
