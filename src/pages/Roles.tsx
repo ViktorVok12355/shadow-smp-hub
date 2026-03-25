@@ -16,14 +16,22 @@ const Roles = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [selected, setSelected] = useState<string | null>(null);
+  const [discordName, setDiscordName] = useState('');
+  const [realName, setRealName] = useState('');
   const [saving, setSaving] = useState(false);
 
+  const canSave = selected && discordName.trim().length > 0;
+
   const handleSave = async () => {
-    if (!selected || !user) return;
+    if (!canSave || !user) return;
     setSaving(true);
     const { error } = await supabase
       .from('profiles')
-      .update({ role: selected } as any)
+      .update({
+        role: selected,
+        discord_name: discordName.trim(),
+        name: realName.trim() || null,
+      } as any)
       .eq('user_id', user.id);
     setSaving(false);
     if (error) {
@@ -64,8 +72,35 @@ const Roles = () => {
         ))}
       </div>
 
+      <div className="w-full max-w-xl space-y-4 mb-8">
+        <div>
+          <label className="block text-foreground font-semibold text-lg mb-2">
+            Discord Name <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            value={discordName}
+            onChange={(e) => setDiscordName(e.target.value)}
+            placeholder="e.g. Shadow#1234"
+            className="w-full rounded-xl border-2 border-border bg-card p-4 text-lg text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+          />
+        </div>
+        <div>
+          <label className="block text-foreground font-semibold text-lg mb-2">
+            Your Real Name <span className="text-muted-foreground text-sm">(optional)</span>
+          </label>
+          <input
+            type="text"
+            value={realName}
+            onChange={(e) => setRealName(e.target.value)}
+            placeholder="e.g. John"
+            className="w-full rounded-xl border-2 border-border bg-card p-4 text-lg text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+          />
+        </div>
+      </div>
+
       <div className="text-center space-y-8">
-        <Button onClick={handleSave} disabled={!selected || saving} className="px-12 py-7 text-lg text-white">
+        <Button onClick={handleSave} disabled={!canSave || saving} className="px-12 py-7 text-lg text-white">
           {saving ? 'Saving...' : 'Save Role'}
         </Button>
         <p className="text-foreground font-semibold text-xl">
